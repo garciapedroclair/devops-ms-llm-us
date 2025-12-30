@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 
@@ -17,6 +18,18 @@ from schemas.message import (
 load_dotenv()
 
 app = FastAPI(title="Message Microservice")
+
+origins = [
+    "http://localhost:5173",  # React dev server
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # or ["*"] for all origins (less secure)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # DEV ONLY: create tables automatically
 Base.metadata.create_all(bind=engine)
