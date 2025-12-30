@@ -56,3 +56,17 @@ docker-compose build
 docker-compose up -d postgres
 docker-compose up -d api
 docker-compose up -d client
+```
+
+**Note:** You can also run all containers at once with:
+
+```bash
+# Build all images and start in detached mode
+docker-compose up --build -d
+```
+
+If you encounter problems, try stop and restart the containers:
+```bash
+docker-compose down
+docker-compose up
+```
