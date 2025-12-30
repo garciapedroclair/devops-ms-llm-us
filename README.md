@@ -44,16 +44,15 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## 3️⃣ Build and start Docker containers
+## 3️⃣ Build and start Docker containers from scratch
 
-From the project root:
+From the project root, build all images and start the containers:
 
 ```bash
-docker-compose up --build
-```
+# Build all images
+docker-compose build
 
-- Backend: http://localhost:8000  
-- Frontend: http://localhost:3000  
-
----
-
+# Start containers (Postgres first, then API, then client)
+docker-compose up -d postgres
+docker-compose up -d api
+docker-compose up -d client
