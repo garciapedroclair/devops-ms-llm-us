@@ -1,17 +1,18 @@
 services:
   postgres:
-    image: postgres:16
-    container_name: dev_postgres
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "${POSTGRES_PORT}:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      image: postgres:16
+      container_name: dev_postgres
+      env_file:
+        - .env
+      environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+      ports:
+        - "${POSTGRES_PORT}:5432"
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+        - ./data:/docker-entrypoint-initdb.d
 
   api:
     build: ./server
