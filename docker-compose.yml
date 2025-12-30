@@ -24,6 +24,15 @@ services:
       - ./server:/app
     depends_on:
       - postgres
+  
+  client:
+    build: ./client
+    container_name: dev_client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
 
 volumes:
   pgdata:
