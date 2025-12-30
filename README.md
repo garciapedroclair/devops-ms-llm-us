@@ -6,12 +6,14 @@ This project is a simple microservice architecture:
 - **Frontend**: React + Vite  
 - **Database**: PostgreSQL  
 - **Dockerized**: all services run with `docker-compose`
-
 ---
 
 ## Prerequisites
-- Docker & Docker Compose installed   
-
+- Docker & Docker Compose installed
+- node -v -> v20.19.6
+- npm -v -> 10.8.2
+- docker --version -> Docker version 28.3.2, build 578ccf6
+- docker-compose --version -> Docker Compose version v2.40.3-desktop.1
 ---
 
 ## 1️⃣ Clone the repository
@@ -20,7 +22,6 @@ This project is a simple microservice architecture:
 git clone <repo-url>
 cd devops-ms-llm-us
 ```
-
 ---
 
 ## 2️⃣ Environment variables
@@ -34,6 +35,7 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=dev_db
 POSTGRES_PORT=5432
+DATABASE_URL=postgresql://postgres:postgres@postgres:5432/dev_db
 ```
 
 ### Frontend (`client/.env`)
@@ -41,7 +43,6 @@ POSTGRES_PORT=5432
 ```env
 VITE_API_URL=http://localhost:8000
 ```
-
 ---
 
 ## 3️⃣ Build and start Docker containers from scratch

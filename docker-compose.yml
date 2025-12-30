@@ -1,7 +1,7 @@
 services:
   postgres:
       image: postgres:16
-      container_name: dev_postgres
+      container_name: postgres
       env_file:
         - .env
       environment:
@@ -16,7 +16,7 @@ services:
 
   api:
     build: ./server
-    container_name: dev_api
+    container_name: api
     env_file:
       - .env
     ports:
@@ -25,6 +25,19 @@ services:
       - ./server:/app
     depends_on:
       - postgres
-      
+
+  client:
+    container_name: client
+    build:
+      context: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
 volumes:
   pgdata:
