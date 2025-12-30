@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
-app = FastAPI(title="Message Microservice")
+app = FastAPI(title="LLM for US Microservice")
 
 origins = [
     "http://localhost:5173",  # React dev server
