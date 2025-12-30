@@ -29,8 +29,16 @@ services:
   client:
     build: ./client
     container_name: dev_client
+    command: npm run dev
     ports:
-      - "5173:5173"
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    environment:
+      NEXT_PUBLIC_API_URL: http://api:8000
     depends_on:
       - api
 
