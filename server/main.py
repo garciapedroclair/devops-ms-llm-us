@@ -12,3 +12,5 @@ def health_check():
         "status": "ok",
         "database_url_loaded": bool(os.getenv("DATABASE_URL"))
     }
+
+# Dependences implemented
