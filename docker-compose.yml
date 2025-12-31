@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    env_file: ./server/.env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./server/data:/docker-entrypoint-initdb.d
+
+  api:
+    build: ./server
+    container_name: api
+    env_file: ./server/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+
+  client:
+    build: ./client
+    container_name: client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - client_nodes:/app/node_modules
+      - client_next_cache:/app/.next
+    environment:
+      - WATCHPACK_POLLING=true
+    stdin_open: true
+    tty: true
+
+volumes:
+  pgdata:
+  client_nodes:
+  client_next_cache:
