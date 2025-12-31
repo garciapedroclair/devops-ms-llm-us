@@ -1,0 +1,14 @@
+services:
+  client:
+    build: .
+    container_name: client
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next  # Importante: evita conflitos de build entre Windows/Linux
+    environment:
+      - WATCHPACK_POLLING=true # Garante o Hot Reload no Next.js
+    stdin_open: true
+    tty: true
