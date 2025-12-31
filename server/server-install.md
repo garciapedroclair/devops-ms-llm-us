@@ -45,7 +45,6 @@ docker-compose build
 # Start containers (Postgres first, then API, then client)
 docker-compose up -d postgres
 docker-compose up -d api
-docker-compose up -d client
 ```
 
 **Note:** You can also run all containers at once with:
