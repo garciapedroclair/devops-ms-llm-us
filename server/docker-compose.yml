@@ -15,29 +15,16 @@ services:
         - ./data:/docker-entrypoint-initdb.d
 
   api:
-    build: ./server
+    build: .
     container_name: api
     env_file:
       - .env
     ports:
       - "8000:8000"
     volumes:
-      - ./server:/app
+      - .:/app
     depends_on:
       - postgres
-
-  client:
-    container_name: client
-    build:
-      context: ./client
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./client:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    command: npm run dev
 
 volumes:
   pgdata:

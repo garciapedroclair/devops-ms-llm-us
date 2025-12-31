@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 app = FastAPI(title="LLM for US Microservice")
 
 origins = [
-    "http://localhost:5173",  # React dev server
+    "http://localhost:3000",  # React dev server
 ]
 
 load_dotenv()
@@ -55,4 +55,16 @@ def list_tasks_attributes():
     data = [dict(zip(columns, row)) for row in query.fetchall()]
     db.close()
     return data
+
+@app.get("/tasks/stats_time_llm")
+def get_task_stats():
+    db = SessionLocal()
+    query = db.execute(text("SELECT time, llm FROM task"))
+    columns = query.keys()
+    data = [dict(zip(columns, row)) for row in query.fetchall()]
+    db.close()
+    return {
+            "time_llm_true": [d["time"] for d in data if d["llm"]],
+            "time_llm_false": [d["time"] for d in data if not d["llm"]]
+        }
 
