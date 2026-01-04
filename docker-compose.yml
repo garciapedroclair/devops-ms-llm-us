@@ -1,12 +1,7 @@
 services:
   postgres:
     image: postgres:16
-    container_name: postgres
     env_file: ./server/.env
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
@@ -15,10 +10,9 @@ services:
 
   api:
     build: ./server
-    container_name: api
     env_file: ./server/.env
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - ./server:/app
       - /app/node_modules
@@ -27,9 +21,8 @@ services:
 
   client:
     build: ./client
-    container_name: client
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./client:/app
       - client_nodes:/app/node_modules

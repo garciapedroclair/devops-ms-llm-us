@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import KnowledgeHeatmap from '@/components/KnowledgeHeatmap';
+import PositiveSankey from '@/components/PositiveSankey';
+import NegativeSankey from '@/components/NegativeSankey';
 
 export default function Home() {
   const [tables, setTables] = useState([]);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
   useEffect(() => {
     fetch(`${API_URL}/health`)
@@ -53,7 +55,18 @@ export default function Home() {
              <KnowledgeHeatmap />
           </div>
         </section>
-
+        
+        {/* Grid for Sankey Charts */}
+         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Critical Risks & Adoption Barriers</h2>
+            <p className="text-sm text-red-600">Identifying concerns regarding reliability and learning impact</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <PositiveSankey />
+            <NegativeSankey />
+          </div>
+        </section>
       </div>
     </main>
   );
