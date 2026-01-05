@@ -21,6 +21,7 @@ Ensure you have the following installed:
 ```text
 .
 ├── client/            # Next.js Frontend application
+├── Data/              # Database configurations 
 ├── server/            # FastAPI Backend & Database configurations
 ├── docker-compose.yml # Project orchestration
 └── README.md          # Project documentation
@@ -42,13 +43,12 @@ Ensure you have a .env file inside the **server/** directory with the following 
 POSTGRES_USER=your_user
 POSTGRES_PASSWORD=your_password
 POSTGRES_DB=your_db
-POSTGRES_PORT=5432
 DATABASE_URL=postgresql://your_user:your_password@postgres:5432/your_db
 ```
 
 and a .env.local inside the **client/** directory with the following variable:
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8001
 ```
 
 ### 3. Run with Docker Compose
@@ -60,8 +60,8 @@ docker compose up -d --build
 ### 4. Access the Services
 Once the containers are running, access:
 
-* **Frontend Dashboard**: http://localhost:3000
-* **API Documentation (Swagger)**: http://localhost:8000/docs
-* **API Health Check**: http://localhost:8000/health
+* **Frontend Dashboard**: http://localhost:3001
+* **API Documentation (Swagger)**: http://localhost:8001/docs
+* **API Health Check**: http://localhost:8001/health
 
 ---

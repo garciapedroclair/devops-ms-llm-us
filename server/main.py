@@ -56,17 +56,75 @@ def list_tasks_attributes():
     db.close()
     return data
 
+
+def median(values):
+    n = len(values)
+    if n == 0:
+        return 0
+
+    values = sorted(values)
+    mid = n // 2
+
+    if n % 2 == 0:
+        return (values[mid - 1] + values[mid]) / 2
+    else:
+        return values[mid]
+
+
+def quartiles(values):
+    if not values:
+        return {
+            "min": 0,
+            "q1": 0,
+            "median": 0,
+            "q3": 0,
+            "max": 0,
+        }
+
+    values = sorted(values)
+    n = len(values)
+
+    q2 = median(values)
+
+    lower_half = values[: n // 2]
+    upper_half = values[(n + 1) // 2 :]
+
+    q1 = median(lower_half)
+    q3 = median(upper_half)
+
+    return {
+        "min": values[0],
+        "q1": q1,
+        "median": q2,
+        "q3": q3,
+        "max": values[-1],
+    }
+
 @app.get("/tasks/stats_time_llm")
 def get_task_stats():
     db = SessionLocal()
+
     query = db.execute(text("SELECT time, llm FROM task"))
     columns = query.keys()
     data = [dict(zip(columns, row)) for row in query.fetchall()]
+
     db.close()
+
+    time_llm_true = [d["time"] for d in data if d["llm"]]
+    time_llm_false = [d["time"] for d in data if not d["llm"]]
+
     return {
-            "time_llm_true": [d["time"] for d in data if d["llm"]],
-            "time_llm_false": [d["time"] for d in data if not d["llm"]]
-        }
+        "with_llm": {
+            "count": len(time_llm_true),
+            **quartiles(time_llm_true),
+        },
+        "without_llm": {
+            "count": len(time_llm_false),
+            **quartiles(time_llm_false),
+        },
+    }
+
+
 
 @app.get("/llm_us/knowledge")
 def list_knowledge():

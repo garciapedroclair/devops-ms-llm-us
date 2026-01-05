@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import KnowledgeHeatmap from '@/components/KnowledgeHeatmap';
 import PositiveSankey from '@/components/PositiveSankey';
 import NegativeSankey from '@/components/NegativeSankey';
+import StatsTimeLLM from '@/components/StatsTimeLLM';
 
 export default function Home() {
   const [tables, setTables] = useState([]);
@@ -26,6 +27,34 @@ export default function Home() {
           <p className="text-red-700 font-medium">User Stories & Knowledge Analysis</p>
         </header>
 
+        {/* Stats Time LLM */}
+        <StatsTimeLLM/>
+
+
+        {/* Grid for Sankey Charts */}
+         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Critical Risks & Adoption Barriers</h2>
+            <p className="text-sm text-red-600">Identifying concerns regarding reliability and learning impact</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <PositiveSankey />
+            <NegativeSankey />
+          </div>
+        </section>
+
+        {/* Heatmap Section */}
+        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Knowledge Distribution</h2>
+            <p className="text-sm text-red-600">Percentage of participants by proficiency level</p>
+          </div>
+          <div className="overflow-hidden rounded-lg bg-white p-4">
+             <KnowledgeHeatmap />
+          </div>
+        </section>
+        
+               
         {/* Database Section */}
         <section className="bg-white rounded-xl shadow-md border border-red-100 p-6">
           <h2 className="text-sm uppercase tracking-wider text-red-600 font-bold mb-4">Database Structure (Tables)</h2>
@@ -42,29 +71,6 @@ export default function Home() {
             ) : (
               <p className="text-red-400 text-sm italic">Loading tables...</p>
             )}
-          </div>
-        </section>
-
-        {/* Heatmap Section */}
-        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
-          <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Knowledge Distribution</h2>
-            <p className="text-sm text-red-600">Percentage of participants by proficiency level</p>
-          </div>
-          <div className="overflow-hidden rounded-lg bg-white p-4">
-             <KnowledgeHeatmap />
-          </div>
-        </section>
-        
-        {/* Grid for Sankey Charts */}
-         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
-          <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Critical Risks & Adoption Barriers</h2>
-            <p className="text-sm text-red-600">Identifying concerns regarding reliability and learning impact</p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <PositiveSankey />
-            <NegativeSankey />
           </div>
         </section>
       </div>

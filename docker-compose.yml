@@ -3,10 +3,10 @@ services:
     image: postgres:16
     env_file: ./server/.env
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./server/data:/docker-entrypoint-initdb.d
+      - ./data:/docker-entrypoint-initdb.d
 
   api:
     build: ./server
