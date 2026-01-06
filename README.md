@@ -65,3 +65,10 @@ Once the containers are running, access:
 * **API Health Check**: http://localhost:8001/health
 
 ---
+
+## 5. Install models
+The application has a ollama container. Execute the following command to install the default model
+
+```bash
+docker exec -it devops-ms-llm-us-ollama-1 ollama pull phi:3-mini
+```

@@ -7,6 +7,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./data:/docker-entrypoint-initdb.d
+  
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
 
   api:
     build: ./server
@@ -18,6 +26,7 @@ services:
       - /app/node_modules
     depends_on:
       - postgres
+      - ollama
 
   client:
     build: ./client
@@ -34,5 +43,6 @@ services:
 
 volumes:
   pgdata:
+  ollama_data:
   client_nodes:
   client_next_cache:

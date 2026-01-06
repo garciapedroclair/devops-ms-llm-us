@@ -5,6 +5,8 @@ import KnowledgeHeatmap from '@/components/KnowledgeHeatmap';
 import PositiveSankey from '@/components/PositiveSankey';
 import NegativeSankey from '@/components/NegativeSankey';
 import BoxPlot from '@/components/BoxPlot';
+import TaskEvaluator from '@/components/TaskEvaluator'
+
 
 export default function Home() {
   const [tables, setTables] = useState([]);
@@ -27,7 +29,15 @@ export default function Home() {
           <p className="text-red-700 font-medium">User Stories & Knowledge Analysis</p>
         </header>
         
-        {/* Group Comparition 
+        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Assess User Stories with AI</h2>
+            <p className="text-sm text-red-600">Instant evaluation and feedback (LLM phi3:mini)</p>
+          </div>
+            <TaskEvaluator/>
+        </section>
+
+        {/* Group Comparition */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
           <div className="mb-6 border-l-4 border-red-600 pl-4">
             <h2 className="text-xl font-bold text-red-900">Start with (G2) versus start without (G1) LLM usage</h2>
@@ -43,7 +53,7 @@ export default function Home() {
             yAxisLabel="Quality (grades)"
           />
           </div>
-        </section> */}
+        </section> 
 
         {/* Stats Time LLM */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
