@@ -6,10 +6,13 @@ import PositiveSankey from '@/components/PositiveSankey';
 import NegativeSankey from '@/components/NegativeSankey';
 import BoxPlot from '@/components/BoxPlot';
 import TaskEvaluator from '@/components/TaskEvaluator'
+import SkillBoxPlotSection from '@/components/SkillBoxPlotSection'; // <-- importa aqui
+import SkillBarErrorPlot from '@/components/SkillBarErrorPlot'; // <-- importa aqui
 
 
 export default function Home() {
   const [tables, setTables] = useState([]);
+  const [selectedSkill, setSelectedSkill] = useState("agile_methods");
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
   useEffect(() => {
@@ -28,7 +31,47 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-red-900">LLM Research Dashboard</h1>
           <p className="text-red-700 font-medium">User Stories & Knowledge Analysis</p>
         </header>
-        
+
+        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          {/* Cabeçalho da seção */}
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Skill Analysis (LLM Tasks Only)</h2>
+            <p className="text-sm text-red-600">
+              Compare execution time and grades by participant knowledge level
+            </p>
+          </div>
+
+          {/* Dropdown para selecionar a skill */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-red-700 mb-1">
+              Select Skill:
+            </label>
+            <select
+              className="border border-red-300 rounded-lg p-2 text-sm text-red-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+              value={selectedSkill}
+              onChange={(e) => setSelectedSkill(e.target.value)}
+            >
+              <option value="sw_project_mgmt">Software Project Management</option>
+              <option value="requirements">Requirements</option>
+              <option value="agile_methods">Agile Methods</option>
+              <option value="llm_usage">LLM Usage</option>
+            </select>
+          </div>
+
+          {/* Grid com os gráficos */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <SkillBarErrorPlot skill={selectedSkill} type="time" />
+            <SkillBarErrorPlot skill={selectedSkill} type="grad_mean" />
+          </div>
+        </section>
+
+
+
+
+        {/* Skill BoxPlot Section */}
+        <SkillBoxPlotSection />
+
+        {/* LLM Mentor */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
           <div className="mb-6 border-l-4 border-red-600 pl-4">
             <h2 className="text-xl font-bold text-red-900">Assess User Stories with AI</h2>
