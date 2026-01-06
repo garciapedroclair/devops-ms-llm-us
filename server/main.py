@@ -73,58 +73,122 @@ def median(values):
 
 def quartiles(values):
     if not values:
-        return {
-            "min": 0,
-            "q1": 0,
-            "median": 0,
-            "q3": 0,
-            "max": 0,
-        }
+        return [0, 0, 0, 0, 0]
 
     values = sorted(values)
     n = len(values)
 
     q2 = median(values)
-
     lower_half = values[: n // 2]
     upper_half = values[(n + 1) // 2 :]
 
     q1 = median(lower_half)
     q3 = median(upper_half)
 
-    return {
-        "min": values[0],
-        "q1": q1,
-        "median": q2,
-        "q3": q3,
-        "max": values[-1],
-    }
+    return [
+        values[0],   # min
+        q1,          # q1
+        q2,          # median
+        q3,          # q3
+        values[-1],  # max
+    ]
+
 
 @app.get("/tasks/stats_time_llm")
 def get_task_stats():
     db = SessionLocal()
 
     query = db.execute(text("SELECT time, llm FROM task"))
-    columns = query.keys()
-    data = [dict(zip(columns, row)) for row in query.fetchall()]
+    rows = query.fetchall()
 
     db.close()
 
-    time_llm_true = [d["time"] for d in data if d["llm"]]
-    time_llm_false = [d["time"] for d in data if not d["llm"]]
+    time_llm_true = [row.time for row in rows if row.llm]
+    time_llm_false = [row.time for row in rows if not row.llm]
 
     return {
-        "with_llm": {
-            "count": len(time_llm_true),
-            **quartiles(time_llm_true),
-        },
-        "without_llm": {
-            "count": len(time_llm_false),
-            **quartiles(time_llm_false),
+        "labels": ["With LLM", "Without LLM"],
+        "boxplot": [
+            quartiles(time_llm_true),
+            quartiles(time_llm_false),
+        ],
+        "count": {
+            "with_llm": len(time_llm_true),
+            "without_llm": len(time_llm_false),
         },
     }
 
+@app.get("/tasks/stats_group_time")
+def get_group_time_stats():
+    db = SessionLocal()
 
+    query = db.execute(text("SELECT time, \"group\" FROM task"))
+    rows = query.fetchall()
+
+    db.close()
+
+    group_01 = [row.time for row in rows if row.group == "G1"]
+    group_02 = [row.time for row in rows if row.group == "G2"]
+
+    return {
+        "labels": ["G1", "G2"],
+        "boxplot": [
+            quartiles(group_01),
+            quartiles(group_02),
+        ],
+        "count": {
+            "G1": len(group_01),
+            "G2": len(group_02),
+        },
+    }
+
+@app.get("/tasks/stats_group_grad")
+def get_group_grade_stats():
+    db = SessionLocal()
+
+    query = db.execute(text("SELECT grad_mean, \"group\" FROM task"))
+    rows = query.fetchall()
+
+    db.close()
+
+    group_01 = [row.grad_mean for row in rows if row.group == "G1"]
+    group_02 = [row.grad_mean for row in rows if row.group == "G2"]
+
+    return {
+        "labels": ["G1", "G2"],
+        "boxplot": [
+            quartiles(group_01),
+            quartiles(group_02),
+        ],
+        "count": {
+            "G1": len(group_01),
+            "G2": len(group_02),
+        },
+    }
+
+@app.get("/tasks/stats_quality_llm")
+def get_quality_tasks_stats():
+    db = SessionLocal()
+
+    query = db.execute(text("SELECT grad_mean, llm FROM task"))
+    rows = query.fetchall()
+
+    db.close()
+
+    quality_llm_true = [row.grad_mean for row in rows if row.llm]
+    quality_llm_false = [row.grad_mean for row in rows if not row.llm]
+
+    return {
+        "labels": ["With LLM", "Without LLM"],
+        "boxplot": [
+            quartiles(quality_llm_true),
+            quartiles(quality_llm_false),
+        ],
+        "count": {
+            "with_llm": len(quality_llm_true),
+            "without_llm": len(quality_llm_false),
+        },
+    }
 
 @app.get("/llm_us/knowledge")
 def list_knowledge():

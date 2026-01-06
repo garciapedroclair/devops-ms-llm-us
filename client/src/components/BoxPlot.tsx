@@ -1,49 +1,55 @@
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  XAxis,
-  YAxis,
-  Line,
-} from 'recharts'
+'use client'
 
-export default function BoxPlot({ data }: { data: any[] }) {
-  return (
-    <ResponsiveContainer width="100%" height={320}>
-      <ComposedChart data={data}>
-        <XAxis
-          dataKey="name"
-          tick={{ fontSize: 12 }}
-        />
-        <YAxis
-          tick={{ fontSize: 12 }}
-          label={{
-            value: 'Time (s)',
-            angle: -90,
-            position: 'insideLeft',
-            style: { fontSize: 12 },
-          }}
-        />
+import { useEffect, useState } from 'react'
+import ReactECharts from 'echarts-for-react'
 
-        {/* Min */}
-        <Line dataKey="min" stroke="#000" dot={false} />
+export default function BoxPlot({
+  url,
+  yAxisLabel,
+}: {
+  url: string
+  yAxisLabel: string
+}) {
+  const [labels, setLabels] = useState<string[]>([])
+  const [boxplot, setBoxplot] = useState<number[][]>([])
 
-        {/* Q1 */}
-        <Line dataKey="q1" stroke="#000" dot={false} />
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setLabels(data.labels)
+        setBoxplot(data.boxplot)
+      })
+  }, [url])
 
-        {/* Median */}
-        <Line
-          dataKey="median"
-          stroke="#000"
-          strokeWidth={2}
-          dot={false}
-        />
+  const option = {
+    tooltip: {
+      trigger: 'item',
+    },
+    xAxis: {
+      type: 'category',
+      data: labels,
+    },
+    yAxis: {
+      type: 'value',
+      name: yAxisLabel,
+    },
+    series: [
+      {
+        type: 'boxplot',
+        data: boxplot,
+        itemStyle: {
+          color: 'rgba(0,0,0,0)',
+          borderColor: '#000',
+          borderWidth: 2,
+        },
+        lineStyle: {
+          color: '#000',
+          width: 2,
+        },
+      },
+    ],
+  }
 
-        {/* Q3 */}
-        <Line dataKey="q3" stroke="#000" dot={false} />
-
-        {/* Max */}
-        <Line dataKey="max" stroke="#000" dot={false} />
-      </ComposedChart>
-    </ResponsiveContainer>
-  )
+  return <ReactECharts option={option} style={{ height: 400 }} />
 }

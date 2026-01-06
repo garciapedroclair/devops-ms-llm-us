@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import KnowledgeHeatmap from '@/components/KnowledgeHeatmap';
 import PositiveSankey from '@/components/PositiveSankey';
 import NegativeSankey from '@/components/NegativeSankey';
-import StatsTimeLLM from '@/components/StatsTimeLLM';
+import BoxPlot from '@/components/BoxPlot';
 
 export default function Home() {
   const [tables, setTables] = useState([]);
@@ -26,9 +26,42 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-red-900">LLM Research Dashboard</h1>
           <p className="text-red-700 font-medium">User Stories & Knowledge Analysis</p>
         </header>
+        
+        {/* Group Comparition 
+        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Start with (G2) versus start without (G1) LLM usage</h2>
+            <p className="text-sm text-red-600">Comparation of the LLM Usage</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <BoxPlot
+            url="http://localhost:8001/tasks/stats_group_time"
+            yAxisLabel="Execution time (minutes)"
+          />
+          <BoxPlot
+            url="http://localhost:8001/tasks/stats_group_grad"
+            yAxisLabel="Quality (grades)"
+          />
+          </div>
+        </section> */}
 
         {/* Stats Time LLM */}
-        <StatsTimeLLM/>
+        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Time & Quality</h2>
+            <p className="text-sm text-red-600">Comparation of the LLM Usage</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <BoxPlot
+            url="http://localhost:8001/tasks/stats_time_llm"
+            yAxisLabel="Execution time (minutes)"
+          />
+          <BoxPlot
+            url="http://localhost:8001/tasks/stats_quality_llm"
+            yAxisLabel="Quality (grades)"
+          />
+          </div>
+        </section>
 
 
         {/* Grid for Sankey Charts */}
