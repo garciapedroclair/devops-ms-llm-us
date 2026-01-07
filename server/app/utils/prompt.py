@@ -1,7 +1,8 @@
 import requests
+import re
 
-OLLAMA_URL = "http://ollama:11434/api/generate"
-OLLAMA_MODEL = "phi3:mini"
+OLLAMA_URL="http://172.17.0.1:11434/api/generate"
+OLLAMA_MODEL = "gemma:2b"
 
 def evaluate_with_llm(task: dict) -> dict:
     prompt = f"""
@@ -17,43 +18,58 @@ Critérios:
 História de usuário (padrão esperado: "Como <persona>, quero <ação>, para <benefício>"):
 
 Descrição:
-{task["description"]}
+{task.get("description", "")}
 
 Fluxo principal:
-{task["main_flow"]}
+{task.get("main_flow", "")}
 
 Fluxos alternativos:
-{task["alt_flow"]}
+{task.get("alt_flow", "")}
 
 Formato da resposta (siga exatamente):
 Score: <0|5|10>
 Comentário: <texto ou vazio>
-"""
+""".strip()
 
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": OLLAMA_MODEL,
-            "prompt": prompt,
-            "stream": False,
+    payload = {
+        "model": OLLAMA_MODEL,
+        "prompt": prompt,
+        "stream": False,
+        "options": {
+            "num_ctx": 512,
             "temperature": 0.0
-        },
-        timeout=300
-    )
+        }
+    }
 
-    text = response.json()["response"]
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json=payload,
+            timeout=180
+        )
+        response.raise_for_status()
+        text = response.json().get("response", "")
+    except Exception as e:
+        return {
+            "score": 0,
+            "comment": f"Erro ao consultar o LLM: {str(e)}"
+        }
 
-    score = None
-    comment = ""
+    # =======================
+    # Parsing robusto
+    # =======================
 
-    for line in text.splitlines():
-        if line.startswith("Score:"):
-            score = int(line.replace("Score:", "").strip())
-        elif line.startswith("Comentário:"):
-            comment = line.replace("Comentário:", "").strip()
+    score_match = re.search(r"Score:\s*(0|5|10)", text)
+    comment_match = re.search(r"Comentário:\s*(.*)", text, re.DOTALL)
+
+    score = int(score_match.group(1)) if score_match else 0
+    comment = comment_match.group(1).strip() if comment_match else ""
 
     if score != 10 and not comment:
         comment = "Comentário não fornecido pelo avaliador."
+
+    if score == 10:
+        comment = ""
 
     return {
         "score": score,

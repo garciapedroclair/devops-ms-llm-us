@@ -34,6 +34,5 @@ services:
 
 volumes:
   pgdata:
-  ollama_data:
   client_nodes:
   client_next_cache:
