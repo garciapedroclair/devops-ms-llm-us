@@ -8,7 +8,7 @@ export default function PositiveSankey() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
   useEffect(() => {
-    fetch(`${API_URL}/llm_us/sankey/positive`)
+    fetch(`${API_URL}/participant/sankey/positive`)
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error("Positive Sankey error:", err));

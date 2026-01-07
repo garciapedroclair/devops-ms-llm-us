@@ -75,7 +75,7 @@ export default function Home() {
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
           <div className="mb-6 border-l-4 border-red-600 pl-4">
             <h2 className="text-xl font-bold text-red-900">Assess User Stories with AI</h2>
-            <p className="text-sm text-red-600">Instant evaluation and feedback (LLM phi3:mini)</p>
+            <p className="text-sm text-red-600">Instant evaluation and feedback (Gemma 2B)</p>
           </div>
             <TaskEvaluator/>
         </section>

@@ -7,16 +7,16 @@ from ..utils.prompt import evaluate_with_llm
 router = APIRouter()
 
 @router.post("/task_evaluate")
-def task_evaluate(code: str = Body(..., embed=True)):
+def task_evaluate(code: str = Body(..., embed=True), task_id: str = Body(..., embed=True)):
     db = SessionLocal()
     try:
         query = db.execute(
             text("""
-                SELECT code, description, main_flow, alt_flow
+                SELECT code, task_id, description, main_flow, alt_flow
                 FROM task
-                WHERE code = :code
+                WHERE code = :code AND task_id = :task_id
             """),
-            {"code": code}
+            {"code": code, "task_id": task_id}
         )
 
         row = query.fetchone()

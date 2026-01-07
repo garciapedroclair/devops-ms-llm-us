@@ -33,7 +33,7 @@ def get_knowledge_heatmap():
     # Lista de colunas de conhecimento
     areas = [
         "prog_oo", "soft_arch", "web_tech", "db_systems", 
-        "sw_project_mgmt", "requirements", "agile_methods", "participantage"
+        "sw_project_mgmt", "requirements", "agile_methods", "llm_usage"
     ]
     
     query = db.execute(text(f"SELECT {', '.join(areas)} FROM participant"))

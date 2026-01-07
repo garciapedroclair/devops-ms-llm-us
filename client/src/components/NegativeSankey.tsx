@@ -8,7 +8,7 @@ export default function NegativeSankey() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
   useEffect(() => {
-    fetch(`${API_URL}/llm_us/sankey/negative`)
+    fetch(`${API_URL}/participant/sankey/negative`)
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error("Negative Sankey error:", err));

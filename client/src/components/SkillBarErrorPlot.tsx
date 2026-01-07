@@ -37,7 +37,7 @@ const SkillBarErrorPlot: React.FC<Props> = ({ skill, type }) => {
   useEffect(() => {
     if (!skill) return;
 
-    fetch(`${API_URL}/skills/aggregate?skill=${skill}&metric=${type}`)
+    fetch(`${API_URL}/skill/aggregate?skill=${skill}&metric=${type}`)
       .then((res) => res.json())
       .then((json) => {
         setData({

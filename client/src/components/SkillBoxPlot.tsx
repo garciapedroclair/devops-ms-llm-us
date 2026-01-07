@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 
 interface SkillBoxPlotProps {
-  skill: string;           // habilidade selecionada
-  type: 'time' | 'grade';  // define se é tempo ou nota
-  xLabels: string[];       // ["Low", "Medium", "High"]
-  title: string;           // Título do gráfico
+  skill: string;
+  type: 'time' | 'grade';
+  xLabels: string[];
+  title: string;
 }
 
 interface BoxPlotData {
@@ -23,15 +23,18 @@ const SkillBoxPlot: React.FC<SkillBoxPlotProps> = ({ skill, type, xLabels, title
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${API_URL}/tasks_${type}_by_skill?skill=${skill}`);
+        const res = await fetch(
+          `${API_URL}/skill/${type}?skill=${encodeURIComponent(skill)}`
+        );
         const json = await res.json();
+
         setData({
           low: json.low || [],
           medium: json.medium || [],
           high: json.high || []
         });
       } catch (err) {
-        console.error("Error fetching boxplot data:", err);
+        console.error('Error fetching boxplot data:', err);
       }
     };
 
@@ -42,7 +45,11 @@ const SkillBoxPlot: React.FC<SkillBoxPlotProps> = ({ skill, type, xLabels, title
     title: {
       text: title,
       left: 'center',
-      textStyle: { color: '#b91c1c', fontSize: 16, fontWeight: 'bold' } // vermelho estilo dashboard
+      textStyle: {
+        color: '#b91c1c',
+        fontSize: 16,
+        fontWeight: 'bold'
+      }
     },
     tooltip: {
       trigger: 'item',
@@ -60,8 +67,10 @@ const SkillBoxPlot: React.FC<SkillBoxPlotProps> = ({ skill, type, xLabels, title
       {
         name: title,
         type: 'boxplot',
-        data: [data.low, data.medium, data.high].map(arr => arr.map(Number)),
-        itemStyle: { color: '#f87171' } // vermelho claro do seu tema
+        data: [data.low, data.medium, data.high].map(arr =>
+          arr.map(Number)
+        ),
+        itemStyle: { color: '#f87171' }
       }
     ]
   };
