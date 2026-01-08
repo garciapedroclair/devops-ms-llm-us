@@ -68,8 +68,8 @@ export default function Home() {
 
 
 
-        {/* Skill BoxPlot Section */}
-        <SkillBoxPlotSection />
+        {/* Skill BoxPlot Section 
+        <SkillBoxPlotSection /> */}
 
         {/* LLM Mentor */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
