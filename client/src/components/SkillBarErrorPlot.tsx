@@ -32,12 +32,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const SkillBarErrorPlot: React.FC<Props> = ({ skill, type }) => {
   const [data, setData] = useState<SkillData | null>(null);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 
   useEffect(() => {
     if (!skill) return;
 
-    fetch(`${API_URL}/skill/aggregate?skill=${skill}&metric=${type}`)
+    fetch(`/api/skill/aggregate?skill=${skill}&metric=${type}`)
       .then((res) => res.json())
       .then((json) => {
         setData({

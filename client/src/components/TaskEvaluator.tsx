@@ -27,15 +27,13 @@ export default function TaskEvaluator() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001'
-
   async function evaluate() {
     setLoading(true)
     setData(null)
     setError(null)
 
     try {
-      const res = await fetch(`${API_URL}/task_evaluate`, {
+      const res = await fetch(`/api/task_evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

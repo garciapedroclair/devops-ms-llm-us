@@ -5,14 +5,13 @@ import ReactECharts from "echarts-for-react";
 
 export default function PositiveSankey() {
   const [data, setData] = useState<any>(null);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
   useEffect(() => {
-    fetch(`${API_URL}/participant/sankey/positive`)
+    fetch(`/api/participant/sankey/positive`)
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error("Positive Sankey error:", err));
-  }, [API_URL]);
+  }, ['/api']);
 
   if (!data) {
     return <p className="text-center text-blue-400 animate-pulse">Loading positive Sankey...</p>;

@@ -16,8 +16,7 @@ def list_knowledge():
             db_systems, 
             sw_project_mgmt, 
             requirements, 
-            agile_methods, 
-            participantage 
+            agile_methods
         FROM participant
     """
     query = db.execute(text(sql))

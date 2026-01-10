@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
-
 export default function KnowledgeHeatmap() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +10,7 @@ export default function KnowledgeHeatmap() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${API_URL}/participant/knowledge/heatmap`);
+        const res = await fetch('/api/participant/knowledge/heatmap');
         const json = await res.json();
         setData(json);
       } catch (err) {

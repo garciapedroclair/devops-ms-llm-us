@@ -18,13 +18,12 @@ interface BoxPlotData {
 
 const SkillBoxPlot: React.FC<SkillBoxPlotProps> = ({ skill, type, xLabels, title }) => {
   const [data, setData] = useState<BoxPlotData>({ low: [], medium: [], high: [] });
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${API_URL}/skill/${type}?skill=${encodeURIComponent(skill)}`
+          `/api/skill/${type}?skill=${encodeURIComponent(skill)}`
         );
         const json = await res.json();
 
@@ -39,7 +38,7 @@ const SkillBoxPlot: React.FC<SkillBoxPlotProps> = ({ skill, type, xLabels, title
     };
 
     fetchData();
-  }, [skill, type, API_URL]);
+  }, [skill, type, "/api"]);
 
   const option = {
     title: {

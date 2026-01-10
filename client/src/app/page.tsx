@@ -13,14 +13,13 @@ import SkillBarErrorPlot from '@/components/SkillBarErrorPlot'; // <-- importa a
 export default function Home() {
   const [tables, setTables] = useState([]);
   const [selectedSkill, setSelectedSkill] = useState("agile_methods");
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
   useEffect(() => {
-    fetch(`${API_URL}/health`)
+    fetch(`/api/health`)
       .then(res => res.json())
       .then(data => setTables(data.tables))
       .catch(err => console.error("Error fetching tables:", err));
-  }, [API_URL]);
+  }, ['/api']);
 
   return (
     <main className="min-h-screen bg-red-50 p-8 font-sans text-slate-900">
@@ -88,11 +87,11 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <BoxPlot
-            url="http://localhost:8001/tasks/stats_group_time"
+            url="/api/tasks/stats_group_time"
             yAxisLabel="Execution time (minutes)"
           />
           <BoxPlot
-            url="http://localhost:8001/tasks/stats_group_grad"
+            url="/api/tasks/stats_group_grad"
             yAxisLabel="Quality (grades)"
           />
           </div>
@@ -106,11 +105,11 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <BoxPlot
-            url="http://localhost:8001/tasks/stats_time_llm"
+            url="/api/tasks/stats_time_llm"
             yAxisLabel="Execution time (minutes)"
           />
           <BoxPlot
-            url="http://localhost:8001/tasks/stats_quality_llm"
+            url="/api/tasks/stats_quality_llm"
             yAxisLabel="Quality (grades)"
           />
           </div>
