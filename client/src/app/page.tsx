@@ -27,17 +27,17 @@ export default function Home() {
         
         {/* Header */}
         <header className="border-b border-red-200 pb-4">
-          <h1 className="text-3xl font-bold text-red-900">LLM Research Dashboard</h1>
-          <p className="text-red-700 font-medium">User Stories & Knowledge Analysis</p>
+          <h1 className="text-3xl font-bold text-red-900">LLM for User Story Dashboard</h1>
+          <p className="text-red-700 font-medium">Large Language Model (chatGPT) as a Support Tool for User Story Creation</p>
         </header>
 
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
           {/* Cabeçalho da seção */}
           <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Skill Analysis (LLM Tasks Only)</h2>
-            <p className="text-sm text-red-600">
-              Compare execution time and grades by participant knowledge level
-            </p>
+            <h2 className="text-xl font-bold text-red-900">Skill Performance with LLM Support</h2>
+            <h3 className="text-sm text-red-600">
+              Time & Grade Comparation by Participant Knowledge Level
+            </h3>
           </div>
 
           {/* Dropdown para selecionar a skill */}
@@ -54,6 +54,7 @@ export default function Home() {
               <option value="requirements">Requirements</option>
               <option value="agile_methods">Agile Methods</option>
               <option value="llm_usage">LLM Usage</option>
+              <option value="prog_oo">Oriented Object Programming</option>
             </select>
           </div>
 
@@ -64,26 +65,26 @@ export default function Home() {
           </div>
         </section>
 
-
-
+        {/* Grid for Sankey Charts */}
+         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Participants Perceptions</h2>
+            <p className="text-sm text-red-600">Identifying challenges and benefits in LLM usage</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <PositiveSankey />
+            <NegativeSankey />
+          </div>
+        </section>
 
         {/* Skill BoxPlot Section 
         <SkillBoxPlotSection /> */}
 
-        {/* LLM Mentor */}
-        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
-          <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Assess User Stories with AI</h2>
-            <p className="text-sm text-red-600">Instant evaluation and feedback (Gemma 2B)</p>
-          </div>
-            <TaskEvaluator/>
-        </section>
-
         {/* Group Comparition */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
           <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Start with (G2) versus start without (G1) LLM usage</h2>
-            <p className="text-sm text-red-600">Comparation of the LLM Usage</p>
+            <h2 className="text-xl font-bold text-red-900">Comparation by Latin Square Group</h2>
+            <p className="text-sm text-red-600">G1: Initial Exposure to LLM Support <br></br> G2: Final Exposure to LLM Support</p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <BoxPlot
@@ -96,6 +97,15 @@ export default function Home() {
           />
           </div>
         </section> 
+
+        {/* LLM Mentor */}
+        <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
+          <div className="mb-6 border-l-4 border-red-600 pl-4">
+            <h2 className="text-xl font-bold text-red-900">Assess User Stories with AI</h2>
+            <p className="text-sm text-red-600">Instant evaluation and feedback (Gemma 2B)</p>
+          </div>
+            <TaskEvaluator/>
+        </section>
 
         {/* Stats Time LLM */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
@@ -112,19 +122,6 @@ export default function Home() {
             url="/api/tasks/stats_quality_llm"
             yAxisLabel="Quality (grades)"
           />
-          </div>
-        </section>
-
-
-        {/* Grid for Sankey Charts */}
-         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
-          <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Critical Risks & Adoption Barriers</h2>
-            <p className="text-sm text-red-600">Identifying concerns regarding reliability and learning impact</p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <PositiveSankey />
-            <NegativeSankey />
           </div>
         </section>
 

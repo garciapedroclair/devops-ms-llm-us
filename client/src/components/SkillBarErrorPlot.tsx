@@ -73,7 +73,7 @@ const SkillBarErrorPlot: React.FC<Props> = ({ skill, type }) => {
       legend: { display: false },
       title: {
         display: true,
-        text: `${type === "time" ? "Execution Time" : "Grades"} by Knowledge Level (${skill})`,
+        text: `${type === "time" ? "Time" : "Grade"}`,
         color: "#991B1B",
         font: { size: 16, weight: "bold" },
       },

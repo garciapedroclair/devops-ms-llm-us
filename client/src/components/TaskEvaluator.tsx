@@ -118,7 +118,13 @@ export default function TaskEvaluator() {
             <h3 className="font-bold text-red-800 mb-2">Task Information</h3>
             <p><b>Task:</b> {data.task.task_id}</p>
             <p><b>Code:</b> {data.task.code}</p>
-            <p><b>Description:</b> {data.task.description}</p>
+
+            <div className="mt-2">
+              <h4 className="font-semibold text-red-700">Description:</h4>
+              <pre className="bg-white p-2 rounded border border-red-100 whitespace-pre-wrap break-words">
+                {data.task.description}
+              </pre>
+            </div>
 
             <div className="mt-2">
               <h4 className="font-semibold text-red-700">Main Flow:</h4>
