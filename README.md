@@ -1,4 +1,19 @@
-# LLM for User Stories - Analytical Dashboard
+# Replicate Packet Tutorial
+- Participants:
+  - Background
+  - Feedback
+  - Link shared
+- Task Table
+
+# Protocols
+- Students Perception
+- Time
+- Quality
+- Interaction with LLM
+- Group
+- Evaluation by LLM
+
+# Analytical Dashboard
 
 This project is an analytical dashboard designed to visualize research data on LLMs as a tool to help students with users stories. It is built using a modern microservice architecture, fully containerized for easy deployment.
 
@@ -70,5 +85,5 @@ Once the containers are running, access:
 The application has a ollama container. Execute the following command to install the default model
 
 ```bash
-docker exec -it devops-ms-llm-us-ollama-1 ollama pull phi:3-mini
+docker exec -it devops-ms-llm-us-ollama-1 ollama pull gemma:2b
 ```
