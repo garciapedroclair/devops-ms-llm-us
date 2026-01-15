@@ -113,6 +113,29 @@ export default function TaskEvaluator() {
       {/* Result */}
       {data && (
         <div className="space-y-6">
+          {/* Evaluation */}
+          <div className="border border-red-200 rounded-lg p-4 bg-red-50">
+            <h3 className="font-bold text-red-800 mb-2">Evaluation</h3>
+            <p>
+              <b>Score:</b>{' '}
+              <span
+                className={`font-bold ${
+                  data.evaluation.score === 10
+                    ? 'text-green-600'
+                    : data.evaluation.score >= 5
+                    ? 'text-yellow-600'
+                    : 'text-red-600'
+                }`}
+              >
+                {data.evaluation.score}
+              </span>
+            </p>
+
+            <p className="mt-2">
+              <b>Comment:</b>{' '}
+              {data.evaluation.comment || 'No comment provided'}
+            </p>
+          </div>
           {/* Task Info */}
           <div className="border border-red-200 rounded-lg p-4 bg-red-50">
             <h3 className="font-bold text-red-800 mb-2">Task Information</h3>
@@ -141,29 +164,6 @@ export default function TaskEvaluator() {
             </div>
           </div>
 
-          {/* Evaluation */}
-          <div className="border border-red-200 rounded-lg p-4 bg-red-50">
-            <h3 className="font-bold text-red-800 mb-2">Evaluation</h3>
-            <p>
-              <b>Score:</b>{' '}
-              <span
-                className={`font-bold ${
-                  data.evaluation.score === 10
-                    ? 'text-green-600'
-                    : data.evaluation.score >= 5
-                    ? 'text-yellow-600'
-                    : 'text-red-600'
-                }`}
-              >
-                {data.evaluation.score}
-              </span>
-            </p>
-
-            <p className="mt-2">
-              <b>Comment:</b>{' '}
-              {data.evaluation.comment || 'No comment provided'}
-            </p>
-          </div>
         </div>
       )}
     </section>

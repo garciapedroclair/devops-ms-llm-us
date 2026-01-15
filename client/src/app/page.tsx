@@ -83,7 +83,7 @@ export default function Home() {
         {/* Group Comparition */}
         <section className="bg-white rounded-xl shadow-lg border border-red-100 p-6">
           <div className="mb-6 border-l-4 border-red-600 pl-4">
-            <h2 className="text-xl font-bold text-red-900">Comparation by Latin Square Group</h2>
+            <h2 className="text-xl font-bold text-red-900">Comparison by Latin Square Group</h2>
             <p className="text-sm text-red-600">G1: Initial Exposure to LLM Support <br></br> G2: Final Exposure to LLM Support</p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
